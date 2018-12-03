@@ -1,5 +1,6 @@
 import sys
 import csv
+import operator
 import numpy as np
 
 
@@ -18,7 +19,6 @@ def readCsvFile(file):
 def getFeaturesDictFromRawText(listOfRawText):
     wholeText = []
     for i in range(1, len(listOfRawText)):
-        print (listOfRawText[0])
         sentence = ""
         for j in range(len(listOfRawText[i])):
             if j == 2:
@@ -41,7 +41,7 @@ def getFeaturesDictFromRawText(listOfRawText):
                 sentence += listOfRawText[i][j] + ' '
         wholeText.append(sentence)
 
-    [print(item) for item in wholeText]
+    #[print(item) for item in wholeText]
     return wholeText
 
 def inferenceExactMatch(data,parameters):
@@ -50,6 +50,31 @@ def inferenceExactMatch(data,parameters):
             parameter =  parameters[j]
             resList = []
 
+def getScore(query, doc):
+    score = 0
+    wordsOfQuery = query.split()
+    wordsOfDoc = doc.split()
+    for word1 in wordsOfQuery:
+        if word1 in wordsOfDoc:
+            score += 10000
+    return score
+
+def rankDoc(query, docList, rankResNum):
+    scoreDict = {}
+    resDocList = []
+    for index in range(len(docList)):
+        score = getScore(query, docList[index])
+        scoreDict[index] = score
+    sortedDict = sorted(scoreDict.items(), key = operator.itemgetter(1), reverse=True)
+    print (sortedDict)
+    for i in range(rankResNum):
+        index = sortedDict[i][0]
+        resDocList.append(docList[index])
+    return(resDocList)
+
 
 listOfRawText = readCsvFile(sys.argv[1])
-price = getFeaturesDictFromRawText(listOfRawText)
+docList = getFeaturesDictFromRawText(listOfRawText)
+rankResNum = 20
+resDocList = rankDoc('Ford Crown 2009 Victoria', docList, rankResNum)
+[print(item) for item in resDocList]
