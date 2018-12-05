@@ -1,8 +1,7 @@
 import sys
 import csv
 import operator
-import numpy as np
-
+from flask import Flask, render_template, request
 
 def readCsvFile(file):
     listOfRawText = []
@@ -44,11 +43,13 @@ def getFeaturesDictFromRawText(listOfRawText):
     #[print(item) for item in wholeText]
     return wholeText
 
+
 def inferenceExactMatch(data,parameters):
     for j in len(parameters):
         if parameters[j] != '-1':
             parameter =  parameters[j]
             resList = []
+
 
 def getScore(query, doc):
     #exact match
@@ -63,6 +64,7 @@ def getScore(query, doc):
                 score += 10000
     return score
 
+
 def rankDoc(query, docList, rankResNum):
     scoreDict = {}
     resDocList = []
@@ -70,7 +72,7 @@ def rankDoc(query, docList, rankResNum):
         score = getScore(query, docList[index])
         scoreDict[index] = score
     sortedDict = sorted(scoreDict.items(), key = operator.itemgetter(1), reverse=True)
-    print (sortedDict)
+    # print (sortedDict)
     for i in range(rankResNum):
         index = sortedDict[i][0]
         resDocList.append(docList[index])
@@ -79,6 +81,23 @@ def rankDoc(query, docList, rankResNum):
 
 listOfRawText = readCsvFile(sys.argv[1])
 docList = getFeaturesDictFromRawText(listOfRawText)
-rankResNum = 2000
+rankResNum = 100
 resDocList = rankDoc('Ford Crown 2009 Victoria', docList, rankResNum)
-[print(item) for item in resDocList]
+# [print(item) for item in resDocList]
+
+
+app = Flask(__name__)
+
+@app.route('/')
+def student():
+   return render_template('index.html')
+
+@app.route('/result',methods = ['POST', 'GET'])
+def result():
+   if request.method == 'POST':
+      result = request.form
+      print(result['Name'])
+      return render_template("result.html", result=result)
+
+if __name__ == '__main__':
+   app.run(debug = True)
