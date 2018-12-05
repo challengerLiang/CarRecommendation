@@ -89,7 +89,7 @@ def rankDoc(query, docList, rankResNum):
 app = Flask(__name__)
 
 @app.route('/')
-def student():
+def car_search():
    return render_template('index.html')
 
 @app.route('/result',methods = ['POST', 'GET'])
