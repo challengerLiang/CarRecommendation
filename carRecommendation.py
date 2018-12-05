@@ -79,6 +79,6 @@ def rankDoc(query, docList, rankResNum):
 
 listOfRawText = readCsvFile(sys.argv[1])
 docList = getFeaturesDictFromRawText(listOfRawText)
-rankResNum = 10
+rankResNum = 2000
 resDocList = rankDoc('Ford Crown 2009 Victoria', docList, rankResNum)
 [print(item) for item in resDocList]
