@@ -79,10 +79,10 @@ def rankDoc(query, docList, rankResNum):
     return(resDocList)
 
 
-listOfRawText = readCsvFile(sys.argv[1])
-docList = getFeaturesDictFromRawText(listOfRawText)
-rankResNum = 100
-resDocList = rankDoc('Ford Crown 2009 Victoria', docList, rankResNum)
+# listOfRawText = readCsvFile(sys.argv[1])
+# docList = getFeaturesDictFromRawText(listOfRawText)
+# rankResNum = 100
+# resDocList = rankDoc('Ford Crown 2009 Victoria', docList, rankResNum)
 # [print(item) for item in resDocList]
 
 
@@ -96,8 +96,13 @@ def student():
 def result():
    if request.method == 'POST':
       result = request.form
-      print(result['Name'])
-      return render_template("result.html", result=result)
+      print(result['query'])
+      listOfRawText = readCsvFile(sys.argv[1])
+      docList = getFeaturesDictFromRawText(listOfRawText)
+      rankResNum = 1000
+      resDocList = rankDoc(str(result['query']), docList, rankResNum)
+      # [print(item) for item in resDocList]
+      return render_template("result.html", result=resDocList)
 
 if __name__ == '__main__':
    app.run(debug = True)
