@@ -1,0 +1,10 @@
+body{
+  background: #343d46;
+}
+
+.container-2{
+  width: 300px;
+  vertical-align: middle;
+  white-space: nowrap;
+  position: relative;
+}
