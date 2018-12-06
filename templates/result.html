@@ -2,9 +2,11 @@
 <html>
 <head>
         <style type="text/css">
-           body { background: url({{ url_for('static', filename='back1.jpg') }}) !important; }
-           background-repeat: no-repeat;
-           background-size: 1500px 900px;
+           body {
+               background: url({{ url_for('static', filename='back1.jpg') }}) !important;
+               background-repeat: repeat !important;
+               background-size: 1500px 900px !important;
+           }
         </style>
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -257,13 +259,9 @@
     <div class="col-sm-8">
         <h3><span class="glyphicon glyphicon-search"></span></h3>
     </div>
-   <!--<div class="col-sm-8">-->
-      <!--<h3>Here are cars you may want to find</h3>-->
-   <!--</div>-->
    <div class="col-sm-12" >
        <div class="row">
            {% for elem in result %}
-            <!--<div class="col-sm-12" >-->
                 <div class="col-sm-4">
                     <ul class="list-group">
                         <li class="list-group-item active">Make<span class="badge">{{ elem[0] }}</span></li>

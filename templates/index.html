@@ -49,11 +49,11 @@
 
         .container-2 input#search:focus, .container-2 input#search:active{
           outline:none;
-          width: 300px;
+          width: 250px;
         }
 
         .container-2:hover input#search{
-        width: 300px;
+        width: 250px;
         }
 
         .container-2:hover .icon{
@@ -61,8 +61,8 @@
         }
 
         .container-2 input#search1{
-          width: 100px;
-          height: 50px;
+          width: 35px;
+          height: 35px;
           background: #2b303b;
           border: none;
           font-size: 8pt;
@@ -81,6 +81,10 @@
           <!--transition: width .55s ease;-->
         }
     </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -95,10 +99,13 @@
         <span class="icon"><i class="fa fa-search"></i></span>
         <!--<input type="search" id="search" placeholder="Find your car..." />-->
         <form action = "http://localhost:5000/result" method = "POST">
-            <p><input type = "text" id="search" name = "query" /></p>
-            <div class="container-2">
-                <span class="icon"><input type = "submit" id="search1" value = "Find your cars..." /></span>
-            </div>
+            <p><input type = "text" id="search" name = "query" />
+                <span class="glyphicon glyphicon-search"></span>
+                <input type = "submit" id="search1" class="glyphicon glyphicon-search" value = "" />
+            </p>
+            <!--<div class="container-2">-->
+                <!--<span class="icon"><input type = "submit" id="search1" value = "" /></span>-->
+            <!--</div>-->
         </form>
     </div>
 </div>
