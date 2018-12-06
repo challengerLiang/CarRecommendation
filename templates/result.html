@@ -127,6 +127,10 @@
                 <img src="{{url_for('static', filename='Saab.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
               {% elif result[0][0] == "Bugatti" %}
                 <img src="{{url_for('static', filename='Bugatti.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Tesla" %}
+                <img src="{{url_for('static', filename='Tesla.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Genesis" %}
+                <img src="{{url_for('static', filename='Genesis.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
               {% else %}
                 <img src="{{url_for('static', filename='sorry.jpeg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
               {% endif %}
@@ -231,6 +235,10 @@
                 <img src="{{url_for('static', filename='Saab.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
               {% elif result[i+1][0] == "Bugatti" %}
                 <img src="{{url_for('static', filename='Bugatti.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Tesla" %}
+                <img src="{{url_for('static', filename='Tesla.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Genesis" %}
+                <img src="{{url_for('static', filename='Genesis.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
               {% else %}
                 <img src="{{url_for('static', filename='sorry.jpeg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
               {% endif %}
