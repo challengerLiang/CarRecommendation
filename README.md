@@ -1,3 +1,3 @@
 # CarRecommendation
 
-This project is to build a car recommendation system.
+This project is to build a car search engine (recommendation system).
