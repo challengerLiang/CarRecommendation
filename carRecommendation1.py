@@ -158,9 +158,9 @@ def getMakeTypeNum(listOfRawText):
     for i in range(1, len(listOfRawText)):
         if not listOfRawText[i][0] in tempDict.keys():
             tempDict[listOfRawText[i][0]] = 1
-    for key in tempDict.keys():
-        print(key)
-    print (len(tempDict))
+    # for key in tempDict.keys():
+    #     print(key)
+    # print (len(tempDict))
     return len(tempDict)
 
 listOfRawText = readCsvFile(sys.argv[1])
@@ -170,8 +170,8 @@ docList = getFeaturesDictFromRawText(listOfRawText)
 buildDocCountDict(docList)
 
 rankResNum = 30
-resDocList = rankDoc('50000 dollar', docList, rankResNum, listOfRawText)
-# [print(item) for item in resDocList]
+resDocList = rankDoc('ford crown', docList, rankResNum, listOfRawText)
+[print(item) for item in resDocList]
 
 getMakeTypeNum(listOfRawText)
 

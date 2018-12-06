@@ -5,9 +5,10 @@ import math
 import numpy as np
 from flask import Flask, render_template, request, url_for
 
+
 dictOfDocCount = {}
 
-
+# need to call at the beginning of the project
 def readCsvFile(file):
     listOfRawText = []
     with open(file, 'r') as csvFile:
@@ -15,17 +16,9 @@ def readCsvFile(file):
         for row in csvReader:
             listOfRawText.append(row)
     csvFile.close()
+    #for row in listOfRawText:
+        #print (row)
     return listOfRawText[1:]
-
-
-def buildDocCountDict(docList):
-    for doc in docList:
-        wordsOfDoc = doc.lower().split()
-        for word in wordsOfDoc:
-            if word in dictOfDocCount.keys():
-                dictOfDocCount[word] += 1
-            else:
-                dictOfDocCount[word] = 1
 
 
 def getFeaturesDictFromRawText(listOfRawText):
@@ -52,26 +45,31 @@ def getFeaturesDictFromRawText(listOfRawText):
             else:
                 sentence += listOfRawText[i][j] + ' '
         wholeText.append(sentence)
+
+    #[print(item) for item in wholeText]
     return wholeText
 
+def buildDocCountDict(docList):
+    for doc in docList:
+        wordsOfDoc = doc.lower().split()
+        for word in wordsOfDoc:
+            if word in dictOfDocCount.keys():
+                dictOfDocCount[word] += 1
+            else:
+                dictOfDocCount[word] = 1
 
-def inferenceExactMatch(data,parameters):
-    for j in len(parameters):
-        if parameters[j] != '-1':
-            parameter =  parameters[j]
-            resList = []
-
-
-def getNumberOfDocs(docList):
-    return len(docList)
-
-
-def getAvgLenOfDoc(docList):
-    counter = 0
-    for line in docList:
-        counter += len(line.split())
-    return counter / len(docList)
-
+# def getScore(query, doc):
+#     #exact match
+#     score = 0
+#     wordsOfQuery = query.lower().split()
+#     wordsOfDoc = doc.lower().split()
+#     for word1 in wordsOfQuery:
+#         if word1 in wordsOfDoc:
+#             if word1 == wordsOfDoc[0]:
+#                 score += 30000
+#             else:
+#                 score += 10000
+#     return score
 
 def getBM25Score(query, doc, numberOfDoc, avgLenOfDoc):
     wordsOfQuery = query.lower().split()
@@ -86,8 +84,13 @@ def getBM25Score(query, doc, numberOfDoc, avgLenOfDoc):
     word1Index = 0
     for word1 in wordsOfDoc:
         if word1 in wordsOfQuery:
+            # idf = math.log((sd.num_docs - sd.doc_count + 0.5) / (sd.doc_count + 0.5))
+            # tf = (k1 + 1) * sd.doc_term_count / (k1 * (1 - b + b * sd.doc_size / sd.avg_dl) + sd.doc_term_count)
+            # qtf = (k3 + 1) * sd.query_term_weight / (k3 + sd.query_term_weight)
+            # res = idf * tf * qtf
 
             docCount = dictOfDocCount[word1]
+            #docCount = getDocCount(docList, term)
             queryTermWeight = queryLen - wordsOfQuery.index(word1) * 5
 
             idf = math.log((numberOfDoc - docCount + 0.5) / (docCount + 0.5))
@@ -104,12 +107,32 @@ def getBM25Score(query, doc, numberOfDoc, avgLenOfDoc):
                         num2 = int(word2)
                         if num2 <= 2018 and num2 >= 1990 and not num2 == 2000:
                             res -= abs(num - num2) * 0.05
+
+            #deal with price difference
             if wordsOfDoc[word1Index - 1] == 'price':
                 for j in range(len(wordsOfQuery)):
                     if wordsOfQuery[j].isdigit() and j + 1 != len(wordsOfQuery) and wordsOfQuery[j + 1] == 'dollar':
                         res -= abs(int(word1) - int(wordsOfQuery[j])) * 0.0005
         word1Index += 1
+    #print(res)
     return res
+
+def getNumberOfDocs(docList):
+    return len(docList)
+
+# def getDocCount(docList, term):
+#     count = 0
+#     for line in docList:
+#         wordsOfDoc = line.lower().split()
+#         if term.lower() in wordsOfDoc:
+#             count += 1
+#     return count
+
+def getAvgLenOfDoc(docList):
+    counter = 0
+    for line in docList:
+        counter += len(line.split())
+    return counter / len(docList)
 
 
 def rankDoc(query, docList, rankResNum, listOfRawText):
@@ -119,16 +142,17 @@ def rankDoc(query, docList, rankResNum, listOfRawText):
     scoreDict = {}
     resDocList = []
     for index in range(len(docList)):
+        #score = getScore(query, docList[index])
         score = getBM25Score(query, docList[index], numberOfDoc, avgLenOfDoc)
 
         scoreDict[index] = score
 
     sortedDict = sorted(scoreDict.items(), key = operator.itemgetter(1), reverse=True)
+    #print (sortedDict)
     for i in range(rankResNum):
         index = sortedDict[i][0]
         resDocList.append(listOfRawText[index])
     return(resDocList)
-
 
 app = Flask(__name__)
 
