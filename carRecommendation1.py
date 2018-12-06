@@ -53,8 +53,8 @@ def inferenceExactMatch(data,parameters):
 def getScore(query, doc):
     #exact match
     score = 0
-    wordsOfQuery = query.split()
-    wordsOfDoc = doc.split()
+    wordsOfQuery = query.lower().split()
+    wordsOfDoc = doc.lower().split()
     for word1 in wordsOfQuery:
         if word1 in wordsOfDoc:
             if word1 == wordsOfDoc[0]:
@@ -81,6 +81,6 @@ def rankDoc(query, docList, rankResNum):
 listOfRawText = readCsvFile(sys.argv[1])
 docList = getFeaturesDictFromRawText(listOfRawText)
 rankResNum = 100
-resDocList = rankDoc('Ford Crown 2009 Victoria', docList, rankResNum)
+resDocList = rankDoc('ford crown 2009 victoria', docList, rankResNum)
 [print(item) for item in resDocList]
 
