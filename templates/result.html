@@ -1,97 +1,45 @@
 <!doctype html>
 <html>
-   <head>
-    <style>
-        body{
-            background: #343d46;
-        }
-        .box{
-          margin: 50px auto;
-          width: 300px;
-          height: 30px;
-        }
-        .container-2{
-            width: 300px;
-            vertical-align: middle;
-            white-space: nowrap;
-            position: relative;
-        }
-        .container-2 input#search{
-          width: 50px;
-          height: 50px;
-          background: #2b303b;
-          border: none;
-          font-size: 10pt;
-          float: left;
-          color: #262626;
-          padding-left: 35px;
-          -webkit-border-radius: 5px;
-          -moz-border-radius: 5px;
-          border-radius: 5px;
-          color: #fff;
-
-          -webkit-transition: width .55s ease;
-          -moz-transition: width .55s ease;
-          -ms-transition: width .55s ease;
-          -o-transition: width .55s ease;
-          transition: width .55s ease;
-        }
-        .container-2 .icon{
-          position: absolute;
-          top: 50%;
-          margin-left: 17px;
-          margin-top: 17px;
-          z-index: 1;
-          color: #4f5b66;
-        }
-
-        .container-2 input#search:focus, .container-2 input#search:active{
-          outline:none;
-          width: 300px;
-        }
-
-        .container-2:hover input#search{
-        width: 300px;
-        }
-
-        .container-2:hover .icon{
-          color: #93a2ad;
-        }
-
-        .container-2 input#search1{
-          width: 100px;
-          height: 50px;
-          background: #2b303b;
-          border: none;
-          font-size: 8pt;
-          float: left;
-          color: #262626;
-          padding-right: 30px;
-           -webkit-border-radius: 5px;
-           -moz-border-radius: 5px;
-          border-radius: 5px;
-          color: #fff;
-
-           <!-- -webkit-transition: width .55s ease;-->
-           <!-- -moz-transition: width .55s ease;-->
-           <!-- -ms-transition: width .55s ease;-->
-           <!-- -o-transition: width .55s ease;-->
-          <!--transition: width .55s ease;-->
-        }
-    </style>
+<head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
    <body>
 
-      <table border = 1>
-         {% for elem in result %}
+   <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="/back">
+        Back to search more cars...
+      </a>
+    </nav>
 
-            <tr>
-               <!--<th> {{ key }} </th>-->
-               <td> {{ elem }} </td>
-            </tr>
+   <div class="col-sm-offset-4 col-sm-8">
+      <h1>We found some cars for you:</h1>
+   </div>
+   <div class="col-sm-offset-2 col-sm-8" >
+       <div class="row">
+           {% for elem in result %}
+            <div class="col-sm-12" >
+                <table border = 1>
+                    <tr>
+                        <td> {{ elem }} </td>
+                    </tr>
+                </table>
+            </div>
+           {% endfor %}
+       </div>
+   </div>
+      <!--<table border = 1>-->
+         <!--{% for elem in result %}-->
 
-         {% endfor %}
-      </table>
+            <!--<tr>-->
+               <!--&lt;!&ndash;<th> {{ key }} </th>&ndash;&gt;-->
+               <!--<td> {{ elem }} </td>-->
+            <!--</tr>-->
+
+         <!--{% endfor %}-->
+      <!--</table>-->
 
    </body>
 </html>

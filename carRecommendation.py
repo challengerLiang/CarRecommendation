@@ -1,7 +1,7 @@
 import sys
 import csv
 import operator
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for
 
 def readCsvFile(file):
     listOfRawText = []
@@ -54,8 +54,8 @@ def inferenceExactMatch(data,parameters):
 def getScore(query, doc):
     #exact match
     score = 0
-    wordsOfQuery = query.split()
-    wordsOfDoc = doc.split()
+    wordsOfQuery = query.lower().split()
+    wordsOfDoc = doc.lower().split()
     for word1 in wordsOfQuery:
         if word1 in wordsOfDoc:
             if word1 == wordsOfDoc[0]:
@@ -99,10 +99,13 @@ def result():
       print(result['query'])
       listOfRawText = readCsvFile(sys.argv[1])
       docList = getFeaturesDictFromRawText(listOfRawText)
-      rankResNum = 1000
+      rankResNum = 20
       resDocList = rankDoc(str(result['query']), docList, rankResNum)
-      # [print(item) for item in resDocList]
       return render_template("result.html", result=resDocList)
+
+@app.route('/back')
+def backtohome():
+   return render_template('index.html')
 
 if __name__ == '__main__':
    app.run(debug = True)
