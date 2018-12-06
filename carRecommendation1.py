@@ -64,7 +64,42 @@ def getScore(query, doc):
     return score
 
 
-def rankDoc(query, docList, rankResNum):
+
+def getBM25Score(query, doc, docLen):
+    wordsOfQuery = query.lower().split()
+    wordsOfDoc = doc.lower().split()
+
+    k1 = 1.5
+    b = 0.9
+    k3 = 500
+
+    for word1 in wordsOfQuery:
+        if word1 in wordsOfDoc:
+
+            # idf = math.log((sd.num_docs - sd.doc_count + 0.5) / (sd.doc_count + 0.5))
+            # tf = (k1 + 1) * sd.doc_term_count / (k1 * (1 - b + b * sd.doc_size / sd.avg_dl) + sd.doc_term_count)
+            # qtf = (k3 + 1) * sd.query_term_weight / (k3 + sd.query_term_weight)
+            # res = idf * tf * qtf
+
+            idf = math.log((docLen - sd.doc_count + 0.5) / (sd.doc_count + 0.5))
+            tf = (k1 + 1) * sd.doc_term_count / (k1 * (1 - b + b * sd.doc_size / sd.avg_dl) + sd.doc_term_count)
+            qtf = (k3 + 1) * sd.query_term_weight / (k3 + sd.query_term_weight)
+            res = idf * tf * qtf
+
+
+    return res
+
+def getNumberOfDocs(listOfRawText):
+    return len(listOfRawText) - 1
+
+# def docTermCount(listOfRawText, term):
+#     for line in listOfRawText:
+#         wordsOfDoc = line.lower().split()
+#     for word1 in wordsOfDoc:
+
+
+
+def rankDoc(query, docList, rankResNum, listOfRawText):
     scoreDict = {}
     resDocList = []
     for index in range(len(docList)):
@@ -74,13 +109,13 @@ def rankDoc(query, docList, rankResNum):
     # print (sortedDict)
     for i in range(rankResNum):
         index = sortedDict[i][0]
-        resDocList.append(docList[index])
+        resDocList.append(listOfRawText[index + 1])
     return(resDocList)
 
 
 listOfRawText = readCsvFile(sys.argv[1])
 docList = getFeaturesDictFromRawText(listOfRawText)
 rankResNum = 100
-resDocList = rankDoc('ford crown 2009 victoria', docList, rankResNum)
+resDocList = rankDoc('ford crown 2009 victoria', docList, rankResNum, listOfRawText)
 [print(item) for item in resDocList]
 
