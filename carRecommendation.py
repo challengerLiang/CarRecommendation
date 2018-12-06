@@ -16,7 +16,7 @@ def readCsvFile(file):
         for row in csvReader:
             listOfRawText.append(row)
     csvFile.close()
-    return listOfRawText
+    return listOfRawText[1:]
 
 
 def buildDocCountDict(docList):
@@ -30,7 +30,7 @@ def buildDocCountDict(docList):
 
 def getFeaturesDictFromRawText(listOfRawText):
     wholeText = []
-    for i in range(1, len(listOfRawText)):
+    for i in range(len(listOfRawText)):
         sentence = ""
         for j in range(len(listOfRawText[i])):
             if j == 2:
@@ -149,7 +149,7 @@ def rankDoc(query, docList, rankResNum, listOfRawText):
     #print (sortedDict)
     for i in range(rankResNum):
         index = sortedDict[i][0]
-        resDocList.append(listOfRawText[index + 1])
+        resDocList.append(listOfRawText[index])
     return(resDocList)
 
 
