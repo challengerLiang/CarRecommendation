@@ -1,97 +1,308 @@
 <!doctype html>
 <html>
-   <head>
-    <style>
-        body{
-            background: #343d46;
-        }
-        .box{
-          margin: 50px auto;
-          width: 300px;
-          height: 30px;
-        }
-        .container-2{
-            width: 300px;
-            vertical-align: middle;
-            white-space: nowrap;
-            position: relative;
-        }
-        .container-2 input#search{
-          width: 50px;
-          height: 50px;
-          background: #2b303b;
-          border: none;
-          font-size: 10pt;
-          float: left;
-          color: #262626;
-          padding-left: 35px;
-          -webkit-border-radius: 5px;
-          -moz-border-radius: 5px;
-          border-radius: 5px;
-          color: #fff;
-
-          -webkit-transition: width .55s ease;
-          -moz-transition: width .55s ease;
-          -ms-transition: width .55s ease;
-          -o-transition: width .55s ease;
-          transition: width .55s ease;
-        }
-        .container-2 .icon{
-          position: absolute;
-          top: 50%;
-          margin-left: 17px;
-          margin-top: 17px;
-          z-index: 1;
-          color: #4f5b66;
-        }
-
-        .container-2 input#search:focus, .container-2 input#search:active{
-          outline:none;
-          width: 300px;
-        }
-
-        .container-2:hover input#search{
-        width: 300px;
-        }
-
-        .container-2:hover .icon{
-          color: #93a2ad;
-        }
-
-        .container-2 input#search1{
-          width: 100px;
-          height: 50px;
-          background: #2b303b;
-          border: none;
-          font-size: 8pt;
-          float: left;
-          color: #262626;
-          padding-right: 30px;
-           -webkit-border-radius: 5px;
-           -moz-border-radius: 5px;
-          border-radius: 5px;
-          color: #fff;
-
-           <!-- -webkit-transition: width .55s ease;-->
-           <!-- -moz-transition: width .55s ease;-->
-           <!-- -ms-transition: width .55s ease;-->
-           <!-- -o-transition: width .55s ease;-->
-          <!--transition: width .55s ease;-->
-        }
-    </style>
+<head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
    <body>
 
-      <table border = 1>
-         {% for elem in result %}
+   <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="/back">
+          <button type="button" class="btn btn-primary">Back to search more cars</button>
+      </a>
+    </nav>
 
-            <tr>
-               <!--<th> {{ key }} </th>-->
-               <td> {{ elem }} </td>
-            </tr>
+   <div class="container">
+       <div class="col-sm-8">
+      <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            {% for i in range(result|length-1) %}
+          <li data-target="#myCarousel" data-slide-to="{{ i+1 }}"></li>
+            {% endfor %}
+        </ol>
 
-         {% endfor %}
-      </table>
+        <!-- Wrapper for slides -->
+         <div class="carousel-inner">
+          <div class="item active">
+              {% if result[0][0] == "Ford" %}
+                <img src="{{url_for('static', filename='Ford.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "BMW" %}
+                <img src="{{url_for('static', filename='BMW.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Maybach" %}
+                <img src="{{url_for('static', filename='Maybach.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Ferrari" %}
+                <img src="{{url_for('static', filename='Ferrari.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Audi" %}
+                <img src="{{url_for('static', filename='Audi.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Mercedes-Benz" %}
+                <img src="{{url_for('static', filename='Mercedes-Benz.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "FIAT" %}
+                <img src="{{url_for('static', filename='FIAT.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Chrysler" %}
+                <img src="{{url_for('static', filename='Chrysler.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Nissan" %}
+                <img src="{{url_for('static', filename='Nissan.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Volvo" %}
+                <img src="{{url_for('static', filename='Volvo.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Mazda" %}
+                <img src="{{url_for('static', filename='Mazda.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Mitsubishi" %}
+                <img src="{{url_for('static', filename='Mitsubishi.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Alfa Romeo" %}
+                <img src="{{url_for('static', filename='Alfa Romeo.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Toyota" %}
+                <img src="{{url_for('static', filename='Toyota.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Pontiac" %}
+                <img src="{{url_for('static', filename='Pontiac.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "McLaren" %}
+                <img src="{{url_for('static', filename='McLaren.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Porsche" %}
+                <img src="{{url_for('static', filename='Porsche.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "GMC" %}
+                <img src="{{url_for('static', filename='GMC.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Hyundai" %}
+                <img src="{{url_for('static', filename='Hyundai.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Plymouth" %}
+                <img src="{{url_for('static', filename='Plymouth.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Honda" %}
+                <img src="{{url_for('static', filename='Honda.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Oldsmobile" %}
+                <img src="{{url_for('static', filename='Oldsmobile.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Suzuki" %}
+                <img src="{{url_for('static', filename='Suzuki.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Cadillac" %}
+                <img src="{{url_for('static', filename='Cadillac.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Kia" %}
+                <img src="{{url_for('static', filename='Kia.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Bentley" %}
+                <img src="{{url_for('static', filename='Bentley.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Chevrolet" %}
+                <img src="{{url_for('static', filename='Chevrolet.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Dodge" %}
+                <img src="{{url_for('static', filename='Dodge.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Lamborghini" %}
+                <img src="{{url_for('static', filename='Lamborghini.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Lincoln" %}
+                <img src="{{url_for('static', filename='Lincoln.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Subaru" %}
+                <img src="{{url_for('static', filename='Subaru.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Volkswagen" %}
+                <img src="{{url_for('static', filename='Volkswagen.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Spyker" %}
+                <img src="{{url_for('static', filename='Spyker.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Buick" %}
+                <img src="{{url_for('static', filename='Buick.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Acura" %}
+                <img src="{{url_for('static', filename='Acura.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Rolls-Royce" %}
+                <img src="{{url_for('static', filename='Rolls-Royce.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Maserati" %}
+                <img src="{{url_for('static', filename='Maserati.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Lexus" %}
+                <img src="{{url_for('static', filename='Lexus.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Aston Martin" %}
+                <img src="{{url_for('static', filename='Aston Martin.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Land Rover" %}
+                <img src="{{url_for('static', filename='Land Rover.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Lotus" %}
+                <img src="{{url_for('static', filename='Lotus.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Infiniti" %}
+                <img src="{{url_for('static', filename='Infiniti.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Scion" %}
+                <img src="{{url_for('static', filename='Scion.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "HUMMER" %}
+                <img src="{{url_for('static', filename='HUMMER.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[0][0] == "Saab" %}
+                <img src="{{url_for('static', filename='Saab.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% else %}
+                <img src="{{url_for('static', filename='sorry.jpeg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% endif %}
+            <div class="carousel-caption">
+              <h3>{{ result[0][0] }}</h3>
+              <p>{{ result[0][1] }}</p>
+              <p>{{ result[0][2] }}</p>
+            </div>
+          </div>
+
+            {% for i in range(result|length-1) %}
+          <div class="item">
+              {% if result[i+1][0] == "Ford" %}
+                <img src="{{url_for('static', filename='Ford.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "BMW" %}
+                <img src="{{url_for('static', filename='BMW.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Maybach" %}
+                <img src="{{url_for('static', filename='Maybach.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Ferrari" %}
+                <img src="{{url_for('static', filename='Ferrari.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Audi" %}
+                <img src="{{url_for('static', filename='Audi.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Mercedes-Benz" %}
+                <img src="{{url_for('static', filename='Mercedes-Benz.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "FIAT" %}
+                <img src="{{url_for('static', filename='FIAT.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Chrysler" %}
+                <img src="{{url_for('static', filename='Chrysler.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Nissan" %}
+                <img src="{{url_for('static', filename='Nissan.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Volvo" %}
+                <img src="{{url_for('static', filename='Volvo.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Mazda" %}
+                <img src="{{url_for('static', filename='Mazda.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Mitsubishi" %}
+                <img src="{{url_for('static', filename='Mitsubishi.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Alfa Romeo" %}
+                <img src="{{url_for('static', filename='Alfa Romeo.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Toyota" %}
+                <img src="{{url_for('static', filename='Toyota.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Pontiac" %}
+                <img src="{{url_for('static', filename='Pontiac.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "McLaren" %}
+                <img src="{{url_for('static', filename='McLaren.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Porsche" %}
+                <img src="{{url_for('static', filename='Porsche.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "GMC" %}
+                <img src="{{url_for('static', filename='GMC.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Hyundai" %}
+                <img src="{{url_for('static', filename='Hyundai.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Plymouth" %}
+                <img src="{{url_for('static', filename='Plymouth.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Honda" %}
+                <img src="{{url_for('static', filename='Honda.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Oldsmobile" %}
+                <img src="{{url_for('static', filename='Oldsmobile.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Suzuki" %}
+                <img src="{{url_for('static', filename='Suzuki.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Cadillac" %}
+                <img src="{{url_for('static', filename='Cadillac.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Kia" %}
+                <img src="{{url_for('static', filename='Kia.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Bentley" %}
+                <img src="{{url_for('static', filename='Bentley.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Chevrolet" %}
+                <img src="{{url_for('static', filename='Chev.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Dodge" %}
+                <img src="{{url_for('static', filename='Dodge.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Lamborghini" %}
+                <img src="{{url_for('static', filename='Lamborghini.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Lincoln" %}
+                <img src="{{url_for('static', filename='Lincoln.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Subaru" %}
+                <img src="{{url_for('static', filename='Subaru.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Volkswagen" %}
+                <img src="{{url_for('static', filename='Volkswagen.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Spyker" %}
+                <img src="{{url_for('static', filename='Spyker.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Buick" %}
+                <img src="{{url_for('static', filename='Buick.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Acura" %}
+                <img src="{{url_for('static', filename='Acura.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Rolls-Royce" %}
+                <img src="{{url_for('static', filename='Rolls-Royce.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Maserati" %}
+                <img src="{{url_for('static', filename='Maserati.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Lexus" %}
+                <img src="{{url_for('static', filename='Lexus.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Aston Martin" %}
+                <img src="{{url_for('static', filename='Aston Martin.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Land Rover" %}
+                <img src="{{url_for('static', filename='Land Rover.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Lotus" %}
+                <img src="{{url_for('static', filename='Lotus.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Infiniti" %}
+                <img src="{{url_for('static', filename='Infiniti.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Scion" %}
+                <img src="{{url_for('static', filename='Scion.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "HUMMER" %}
+                <img src="{{url_for('static', filename='HUMMER.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% elif result[i+1][0] == "Saab" %}
+                <img src="{{url_for('static', filename='Saab.jpg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% else %}
+                <img src="{{url_for('static', filename='sorry.jpeg')}}" alt="Sorry we can't find the image for you" style="width:100%;">
+              {% endif %}
+            <div class="carousel-caption">
+              <h3>{{ result[i+1][0] }}</h3>
+              <p>{{ result[i+1][1] }}</p>
+              <p>{{ result[i+1][2] }}</p>
+            </div>
+          </div>
+            {% endfor %}
+
+          <!--<div class="item">-->
+            <!--<img src="{{url_for('static', filename='Alfa Romeo.jpg')}}" alt="New York" style="width:100%;">-->
+            <!--<div class="carousel-caption">-->
+              <!--<h3>New York</h3>-->
+              <!--<p>We love the Big Apple!</p>-->
+            <!--</div>-->
+          <!--</div>-->
+
+        </div>
+
+        <!-- Left and right controls -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+    </div>
+   </div>
+
+    <div class="col-sm-8">
+        <h3>Check the detailed information for your cars   <span class="glyphicon glyphicon-search"></span></h3>
+    </div>
+   <!--<div class="col-sm-8">-->
+      <!--<h3>Here are cars you may want to find</h3>-->
+   <!--</div>-->
+   <div class="col-sm-12" >
+       <div class="row">
+           {% for elem in result %}
+            <!--<div class="col-sm-12" >-->
+                <div class="col-sm-4">
+                    <ul class="list-group">
+                        <li class="list-group-item active">Make<span class="badge">{{ elem[0] }}</span></li>
+                        <li class="list-group-item">Model<span class="badge">{{ elem[1] }}</span></li>
+                        <li class="list-group-item">Year<span class="badge">{{ elem[2] }}</span></li>
+                        <li class="list-group-item">Engine Fuel Type<span class="badge">{{ elem[3] }}</span></li>
+                        <li class="list-group-item">Engine HP<span class="badge">{{ elem[4] }}</span></li>
+                        <li class="list-group-item">Engine Cylinders<span class="badge">{{ elem[5] }}</span></li>
+                        <li class="list-group-item">Transmission Type<span class="badge">{{ elem[6] }}</span></li>
+                        <li class="list-group-item">Driven_Wheels<span class="badge">{{ elem[7] }}</span></li>
+                        <li class="list-group-item">Number of Doors<span class="badge">{{ elem[8] }}</span></li>
+                        <li class="list-group-item">Market Category<span class="badge">{{ elem[9] }}</span></li>
+                        <li class="list-group-item">Vehicle Size<span class="badge">{{ elem[10] }}</span></li>
+                        <li class="list-group-item">Vehicle Style<span class="badge">{{ elem[11] }}</span></li>
+                        <li class="list-group-item">highway MPG<span class="badge">{{ elem[12] }}</span></li>
+                        <li class="list-group-item">city mpg<span class="badge">{{ elem[13] }}</span></li>
+                        <li class="list-group-item">Popularity<span class="badge">{{ elem[14] }}</span></li>
+                        <li class="list-group-item">MSRP<span class="badge">{{ elem[15] }}</span></li>
+                    </ul>
+                </div>
+                <!--<table border = 1>-->
+                    <!--<tr>-->
+                        <!--<td> {{ elem }} </td>-->
+                    <!--</tr>-->
+                <!--</table>-->
+            <!--</div>-->
+           {% endfor %}
+       </div>
+   </div>
+      <!--<table border = 1>-->
+         <!--{% for elem in result %}-->
+
+            <!--<tr>-->
+               <!--&lt;!&ndash;<th> {{ key }} </th>&ndash;&gt;-->
+               <!--<td> {{ elem }} </td>-->
+            <!--</tr>-->
+
+         <!--{% endfor %}-->
+      <!--</table>-->
 
    </body>
 </html>
