@@ -17,12 +17,12 @@ def readCsvFile(file):
     csvFile.close()
     #for row in listOfRawText:
         #print (row)
-    return listOfRawText
+    return listOfRawText[1:]
 
 
 def getFeaturesDictFromRawText(listOfRawText):
     wholeText = []
-    for i in range(1, len(listOfRawText)):
+    for i in range(len(listOfRawText)):
         sentence = ""
         for j in range(len(listOfRawText[i])):
             if j == 2:
@@ -150,7 +150,7 @@ def rankDoc(query, docList, rankResNum, listOfRawText):
     #print (sortedDict)
     for i in range(rankResNum):
         index = sortedDict[i][0]
-        resDocList.append(listOfRawText[index + 1])
+        resDocList.append(listOfRawText[index])
     return(resDocList)
 
 def getMakeTypeNum(listOfRawText):
@@ -166,8 +166,9 @@ listOfRawText = readCsvFile(sys.argv[1])
 listOfRawText = np.random.permutation(listOfRawText)
 docList = getFeaturesDictFromRawText(listOfRawText)
 buildDocCountDict(docList)
-rankResNum = 20
-resDocList = rankDoc(' audi 2015 50000 dollar', docList, rankResNum, listOfRawText)
+
+rankResNum = 30
+resDocList = rankDoc('50000 dollar', docList, rankResNum, listOfRawText)
 [print(item) for item in resDocList]
 
 getMakeTypeNum(listOfRawText)
