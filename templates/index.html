@@ -3,7 +3,9 @@
 <head>
     <style>
         body{
-            background: #343d46;
+            background: url({{ url_for('static', filename='background.jpg') }});
+            background-repeat: no-repeat;
+            background-size: 1300px 900px;
         }
         .box{
           margin: 50px auto;
@@ -82,6 +84,11 @@
 </head>
 <body>
 
+<div class="box">
+    <div class="container-2">
+        <h1>Car Search Engine</h1>
+    </div>
+</div>
 
 <div class="box">
     <div class="container-2">
