@@ -1,6 +1,11 @@
 <!doctype html>
 <html>
 <head>
+        <style type="text/css">
+           body { background: url({{ url_for('static', filename='back1.jpg') }}) !important; }
+           background-repeat: no-repeat;
+           background-size: 1500px 900px;
+        </style>
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -15,7 +20,7 @@
     </nav>
 
    <div class="container">
-       <div class="col-sm-8">
+       <div class="col-sm-12">
       <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
         <ol class="carousel-indicators">
@@ -230,15 +235,6 @@
             </div>
           </div>
             {% endfor %}
-
-          <!--<div class="item">-->
-            <!--<img src="{{url_for('static', filename='Alfa Romeo.jpg')}}" alt="New York" style="width:100%;">-->
-            <!--<div class="carousel-caption">-->
-              <!--<h3>New York</h3>-->
-              <!--<p>We love the Big Apple!</p>-->
-            <!--</div>-->
-          <!--</div>-->
-
         </div>
 
         <!-- Left and right controls -->
@@ -255,7 +251,7 @@
    </div>
 
     <div class="col-sm-8">
-        <h3>Check the detailed information for your cars   <span class="glyphicon glyphicon-search"></span></h3>
+        <h3><span class="glyphicon glyphicon-search"></span></h3>
     </div>
    <!--<div class="col-sm-8">-->
       <!--<h3>Here are cars you may want to find</h3>-->
@@ -284,25 +280,8 @@
                         <li class="list-group-item">MSRP<span class="badge">{{ elem[15] }}</span></li>
                     </ul>
                 </div>
-                <!--<table border = 1>-->
-                    <!--<tr>-->
-                        <!--<td> {{ elem }} </td>-->
-                    <!--</tr>-->
-                <!--</table>-->
-            <!--</div>-->
            {% endfor %}
        </div>
    </div>
-      <!--<table border = 1>-->
-         <!--{% for elem in result %}-->
-
-            <!--<tr>-->
-               <!--&lt;!&ndash;<th> {{ key }} </th>&ndash;&gt;-->
-               <!--<td> {{ elem }} </td>-->
-            <!--</tr>-->
-
-         <!--{% endfor %}-->
-      <!--</table>-->
-
    </body>
 </html>
