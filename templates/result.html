@@ -10,23 +10,45 @@
 
    <nav class="navbar navbar-light bg-light">
       <a class="navbar-brand" href="/back">
-        Back to search more cars...
+          <button type="button" class="btn btn-primary">Back to search more cars</button>
       </a>
     </nav>
-
-   <div class="col-sm-offset-4 col-sm-8">
-      <h1>We found some cars for you:</h1>
-   </div>
-   <div class="col-sm-offset-2 col-sm-8" >
+    <div class="col-sm-8">
+        <h3>Here are cars you may want to find   <span class="glyphicon glyphicon-search"></span></h3>
+    </div>
+   <!--<div class="col-sm-8">-->
+      <!--<h3>Here are cars you may want to find</h3>-->
+   <!--</div>-->
+   <div class="col-sm-12" >
        <div class="row">
            {% for elem in result %}
-            <div class="col-sm-12" >
-                <table border = 1>
-                    <tr>
-                        <td> {{ elem }} </td>
-                    </tr>
-                </table>
-            </div>
+            <!--<div class="col-sm-12" >-->
+                <div class="col-sm-4">
+                    <ul class="list-group">
+                        <li class="list-group-item active">Make<span class="badge">{{ elem[0] }}</span></li>
+                        <li class="list-group-item">Model<span class="badge">{{ elem[1] }}</span></li>
+                        <li class="list-group-item">Year<span class="badge">{{ elem[2] }}</span></li>
+                        <li class="list-group-item">Engine Fuel Type<span class="badge">{{ elem[3] }}</span></li>
+                        <li class="list-group-item">Engine HP<span class="badge">{{ elem[4] }}</span></li>
+                        <li class="list-group-item">Engine Cylinders<span class="badge">{{ elem[5] }}</span></li>
+                        <li class="list-group-item">Transmission Type<span class="badge">{{ elem[6] }}</span></li>
+                        <li class="list-group-item">Driven_Wheels<span class="badge">{{ elem[7] }}</span></li>
+                        <li class="list-group-item">Number of Doors<span class="badge">{{ elem[8] }}</span></li>
+                        <li class="list-group-item">Market Category<span class="badge">{{ elem[9] }}</span></li>
+                        <li class="list-group-item">Vehicle Size<span class="badge">{{ elem[10] }}</span></li>
+                        <li class="list-group-item">Vehicle Style<span class="badge">{{ elem[11] }}</span></li>
+                        <li class="list-group-item">highway MPG<span class="badge">{{ elem[12] }}</span></li>
+                        <li class="list-group-item">city mpg<span class="badge">{{ elem[13] }}</span></li>
+                        <li class="list-group-item">Popularity<span class="badge">{{ elem[14] }}</span></li>
+                        <li class="list-group-item">MSRP<span class="badge">{{ elem[15] }}</span></li>
+                    </ul>
+                </div>
+                <!--<table border = 1>-->
+                    <!--<tr>-->
+                        <!--<td> {{ elem }} </td>-->
+                    <!--</tr>-->
+                <!--</table>-->
+            <!--</div>-->
            {% endfor %}
        </div>
    </div>

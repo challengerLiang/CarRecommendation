@@ -17,11 +17,37 @@
 <div class="box">
   <p>Confirm your search</p>
   <button onclick="myFunction()">Search</button>
+  <div id="response"></div>
+
   <script>
   function myFunction() {
       var query = document.getElementById("search").value;
+      $.ajax({
+        url: "/_get_data",
+        type: "POST",
+        success: function(resp){
+          $('response').append(resp.data);
+        }
+      });
       console.log(query);
+      postData(query)
   }
+
+  function postData(input) {
+    console.log(input);
+      // $.ajax({
+      //     type: "POST",
+      //     url: "/reverse_pca.py",
+      //     data: { param: input },
+      //     success: callbackFunc
+      // });
+  }
+
+  function callbackFunc(response) {
+      // do something with the response
+      console.log(response);
+  }
+
   </script>
 </div>
 

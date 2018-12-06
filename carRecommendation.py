@@ -65,7 +65,7 @@ def getScore(query, doc):
     return score
 
 
-def rankDoc(query, docList, rankResNum):
+def rankDoc(query, docList, rankResNum, listOfRawText):
     scoreDict = {}
     resDocList = []
     for index in range(len(docList)):
@@ -75,7 +75,7 @@ def rankDoc(query, docList, rankResNum):
     # print (sortedDict)
     for i in range(rankResNum):
         index = sortedDict[i][0]
-        resDocList.append(docList[index])
+        resDocList.append(listOfRawText[index + 1])
     return(resDocList)
 
 
@@ -99,8 +99,8 @@ def result():
       print(result['query'])
       listOfRawText = readCsvFile(sys.argv[1])
       docList = getFeaturesDictFromRawText(listOfRawText)
-      rankResNum = 20
-      resDocList = rankDoc(str(result['query']), docList, rankResNum)
+      rankResNum = 21
+      resDocList = rankDoc(str(result['query']), docList, rankResNum, listOfRawText)
       return render_template("result.html", result=resDocList)
 
 @app.route('/back')
