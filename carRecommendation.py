@@ -83,20 +83,38 @@ def getBM25Score(query, doc, numberOfDoc, avgLenOfDoc):
     queryLen = len(query)
     word1Index = 0
     for word1 in wordsOfDoc:
-        if word1 in wordsOfQuery:
-            # idf = math.log((sd.num_docs - sd.doc_count + 0.5) / (sd.doc_count + 0.5))
-            # tf = (k1 + 1) * sd.doc_term_count / (k1 * (1 - b + b * sd.doc_size / sd.avg_dl) + sd.doc_term_count)
-            # qtf = (k3 + 1) * sd.query_term_weight / (k3 + sd.query_term_weight)
-            # res = idf * tf * qtf
+        # if word1 in wordsOfQuery or ('-' in word1 and
+        #                                  (word1.split('-')[0] in wordsOfQuery or word1.split('-')[1] in wordsOfQuery)):
+        #
+        #     docCount = dictOfDocCount[word1]
+        #     #docCount = getDocCount(docList, term)
+        #     queryTermWeight = 1
+        #     if word1 in wordsOfQuery:
+        #         queryTermWeight = (queryLen - wordsOfQuery.index(word1)) * 3
+        #     else:
+        #         queryTermWeight = queryLen
+        #
+        #     idf = math.log((numberOfDoc - docCount + 0.5) / (docCount + 0.5))
+        #     tf = (k1 + 1) * 1 / (k1 * (1 - b + b * len(wordsOfDoc) / avgLenOfDoc) + 1)
+        #     qtf = (k3 + 1) * queryTermWeight / (k3 + queryTermWeight)
+        #     res += idf * tf * qtf
 
-            docCount = dictOfDocCount[word1]
-            #docCount = getDocCount(docList, term)
-            queryTermWeight = queryLen - wordsOfQuery.index(word1) * 5
+        for word2 in wordsOfQuery:
+            if word1 == word2 or (word1Index == 0 and (not word2.isdigit()) and word1.find(word2) >= 0):
+                docCount = dictOfDocCount[word1]
+                #docCount = getDocCount(docList, term)
+                queryTermWeight = 1
+                if word2 in wordsOfQuery:
+                    queryTermWeight = (queryLen - wordsOfQuery.index(word2)) * 3
+                else:
+                    queryTermWeight = queryLen
 
-            idf = math.log((numberOfDoc - docCount + 0.5) / (docCount + 0.5))
-            tf = (k1 + 1) * 1 / (k1 * (1 - b + b * len(wordsOfDoc) / avgLenOfDoc) + 1)
-            qtf = (k3 + 1) * queryTermWeight / (k3 + queryTermWeight)
-            res += idf * tf * qtf
+                idf = math.log((numberOfDoc - docCount + 0.5) / (docCount + 0.5))
+                tf = (k1 + 1) * 1 / (k1 * (1 - b + b * len(wordsOfDoc) / avgLenOfDoc) + 1)
+                qtf = (k3 + 1) * queryTermWeight / (k3 + queryTermWeight)
+                res += idf * tf * qtf
+
+
 
         if word1.isdigit():
             num = int(word1)
@@ -148,7 +166,7 @@ def rankDoc(query, docList, rankResNum, listOfRawText):
         scoreDict[index] = score
 
     sortedDict = sorted(scoreDict.items(), key = operator.itemgetter(1), reverse=True)
-    #print (sortedDict)
+    print (sortedDict)
     for i in range(rankResNum):
         index = sortedDict[i][0]
         resDocList.append(listOfRawText[index])
