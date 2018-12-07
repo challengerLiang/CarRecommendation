@@ -83,7 +83,7 @@ def getBM25Score(query, doc, numberOfDoc, avgLenOfDoc, dictOfDocCount):
     word1Index = 0
     for word1 in wordsOfDoc:
         # if word1 in wordsOfQuery or ('-' in word1 and
-        #                                  (word1.split('-')[0] in wordsOfQuery or word1.split('-')[1] in wordsOfQuery)):
+        # (word1.split('-')[0] in wordsOfQuery or word1.split('-')[1] in wordsOfQuery)):
         #
         #     docCount = dictOfDocCount[word1]
         #     #docCount = getDocCount(docList, term)
