@@ -71,7 +71,9 @@ def buildDocCountDict(docList):
 #     return score
 
 def getBM25Score(query, doc, numberOfDoc, avgLenOfDoc):
-    wordsOfQuery = query.lower().split()
+    wordsOfQuery = query.lower().replace('fancy','exotic,luxury')
+    wordsOfQuery = wordsOfQuery.replace('fastest', 'exotic,performance')
+    wordsOfQuery = wordsOfQuery.split()
     wordsOfDoc = doc.lower().split()
     res = 0
 
@@ -99,7 +101,7 @@ def getBM25Score(query, doc, numberOfDoc, avgLenOfDoc):
         #     res += idf * tf * qtf
 
         for word2 in wordsOfQuery:
-            if word1 == word2 or (len(word2) >= 3 and word1Index == 0 and (not word2.isdigit()) and word1.find(word2) >= 0):
+            if word1 == word2 or (len(word2) >= 3 and (word1Index == 0 or word1Index == 9) and (not word2.isdigit()) and word1.find(word2) >= 0):
                 docCount = dictOfDocCount[word1]
                 #docCount = getDocCount(docList, term)
                 queryTermWeight = 1
@@ -188,7 +190,7 @@ docList = getFeaturesDictFromRawText(listOfRawText)
 buildDocCountDict(docList)
 
 rankResNum = 30
-resDocList = rankDoc('chev    1990', docList, rankResNum, listOfRawText)
+#resDocList = rankDoc('chev    1990', docList, rankResNum, listOfRawText)
 #[print(item) for item in resDocList]
 
 getMakeTypeNum(listOfRawText)
@@ -216,7 +218,7 @@ queryList[16] = 'ford crown 2015'
 queryList[17] = 'ford crown 2015'
 queryList[18] = 'ford crown 2015'
 queryList[18] = 'ford crown 2015'
-queryList[19] = 'I want to buy a BMW with a price of 50000'
+queryList[19] = 'I want to buy a fancy car'
 
 
 resDocList = rankDoc(queryList[19], docList, rankResNum, listOfRawText)
