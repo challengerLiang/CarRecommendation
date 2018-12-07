@@ -99,7 +99,7 @@ def getBM25Score(query, doc, numberOfDoc, avgLenOfDoc):
         #     res += idf * tf * qtf
 
         for word2 in wordsOfQuery:
-            if word1 == word2 or (word1Index == 0 and (not word2.isdigit()) and word1.find(word2) >= 0):
+            if word1 == word2 or (len(word2) >= 3 and word1Index == 0 and (not word2.isdigit()) and word1.find(word2) >= 0):
                 docCount = dictOfDocCount[word1]
                 #docCount = getDocCount(docList, term)
                 queryTermWeight = 1
@@ -210,7 +210,7 @@ queryList[10] = 'mercedes-benz'
 queryList[11] = 'benz'
 queryList[12] = 'for crown 2015'
 queryList[13] = 'chev    1990'
-queryList[14] = 'ford crown 2015'
+queryList[14] = 'I want aud'
 queryList[15] = 'ford crown 2015'
 queryList[16] = 'ford crown 2015'
 queryList[17] = 'ford crown 2015'
@@ -218,7 +218,7 @@ queryList[18] = 'ford crown 2015'
 queryList[18] = 'ford crown 2015'
 
 
-resDocList = rankDoc(queryList[1], docList, rankResNum, listOfRawText)
+resDocList = rankDoc(queryList[14], docList, rankResNum, listOfRawText)
 [print(item) for item in resDocList]
 
 
