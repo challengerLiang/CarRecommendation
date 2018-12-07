@@ -5,9 +5,6 @@ import math
 import numpy as np
 from flask import Flask, render_template, request, url_for
 
-
-dictOfDocCount = {}
-
 # need to call at the beginning of the project
 def readCsvFile(file):
     listOfRawText = []
@@ -50,6 +47,7 @@ def getFeaturesDictFromRawText(listOfRawText):
     return wholeText
 
 def buildDocCountDict(docList):
+    dictOfDocCount = {}
     for doc in docList:
         wordsOfDoc = doc.lower().split()
         for word in wordsOfDoc:
@@ -57,6 +55,7 @@ def buildDocCountDict(docList):
                 dictOfDocCount[word] += 1
             else:
                 dictOfDocCount[word] = 1
+    return dictOfDocCount
 
 # def getScore(query, doc):
 #     #exact match
@@ -71,7 +70,7 @@ def buildDocCountDict(docList):
 #                 score += 10000
 #     return score
 
-def getBM25Score(query, doc, numberOfDoc, avgLenOfDoc):
+def getBM25Score(query, doc, numberOfDoc, avgLenOfDoc, dictOfDocCount):
     wordsOfQuery = query.lower().split()
     wordsOfDoc = doc.lower().split()
     res = 0
@@ -153,7 +152,7 @@ def getAvgLenOfDoc(docList):
     return counter / len(docList)
 
 
-def rankDoc(query, docList, rankResNum, listOfRawText):
+def rankDoc(query, docList, rankResNum, listOfRawText, dictOfDocCount):
     numberOfDoc = getNumberOfDocs(docList)
     avgLenOfDoc = getAvgLenOfDoc(docList)
 
@@ -161,7 +160,7 @@ def rankDoc(query, docList, rankResNum, listOfRawText):
     resDocList = []
     for index in range(len(docList)):
         #score = getScore(query, docList[index])
-        score = getBM25Score(query, docList[index], numberOfDoc, avgLenOfDoc)
+        score = getBM25Score(query, docList[index], numberOfDoc, avgLenOfDoc, dictOfDocCount)
 
         scoreDict[index] = score
 
@@ -171,6 +170,16 @@ def rankDoc(query, docList, rankResNum, listOfRawText):
         index = sortedDict[i][0]
         resDocList.append(listOfRawText[index])
     return(resDocList)
+
+def getMakeTypeNum(listOfRawText):
+    tempDict = {}
+    for i in range(1, len(listOfRawText)):
+        if not listOfRawText[i][0] in tempDict.keys():
+            tempDict[listOfRawText[i][0]] = 1
+    # for key in tempDict.keys():
+    #     print(key)
+    # print (len(tempDict))
+    return len(tempDict)
 
 app = Flask(__name__)
 
@@ -185,14 +194,14 @@ def result():
       listOfRawText = readCsvFile(sys.argv[1])
       listOfRawText = np.random.permutation(listOfRawText)
       docList = getFeaturesDictFromRawText(listOfRawText)
-      buildDocCountDict(docList)
+      dictOfDocCount = buildDocCountDict(docList)
       rankResNum = 30
-      resDocList = rankDoc(str(result['query']), docList, rankResNum, listOfRawText)
+      resDocList = rankDoc(str(result['query']), docList, rankResNum, listOfRawText, dictOfDocCount)
       return render_template("result.html", result=resDocList)
 
 @app.route('/back')
 def backtohome():
-   return render_template('index.html')
+    return render_template('index.html')
 
 if __name__ == '__main__':
    app.run(debug = True)
