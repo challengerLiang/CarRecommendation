@@ -108,7 +108,7 @@ def feature_revise(raw_train_dev, raw_test):
         else:
             vec_7 = 3
 
-        vec_3 = -1
+        vec_3 = 0
         if items[3] in cylinders:
             vec_3 = int(items[3])
 
@@ -231,13 +231,39 @@ def feature_check(raw_train_dev, raw_test):
     # plt.show()
 
 
+def split_x_y(data):
+    x_list = []
+    y_list = []
+    for items in data:
+        x_list.append(items[0:-1])
+        y_list.append(items[-1])
+    return x_list, y_list
+
+
+def train_evaluation(classifier, train_x, train_y, dev_x, dev_y):
+    model = classifier.fit(train_x, train_y)
+    predicted = model.predict(dev_x)
+    correct = 0
+    total = 0
+    for i in range(len(predicted)):
+        if predicted[i] == dev_y[i]:
+            correct += 1
+        total += 1
+    accuracy = float(correct / total)
+    return model, accuracy
+
+
 list_raw_train_dev = read_csv("data.csv")
 list_raw_test = read_csv("cars.csv")
 raw_feature_train_dev, raw_feature_test = feature_selection(list_raw_train_dev, list_raw_test)
 # feature_check(raw_feature_train_dev, raw_feature_test)
 train_dev, test = feature_revise(raw_feature_train_dev, raw_feature_test)
 train, dev = random_split(train_dev)
-print(dev)
+train_X, train_Y = split_x_y(train)
+dev_X, dev_Y = split_x_y(dev)
+model, accuracy = train_evaluation(MultinomialNB(), train_X, train_Y, dev_X, dev_Y)
+print(accuracy)
+
 
 
 # simply tf-idf-vectorizer:
