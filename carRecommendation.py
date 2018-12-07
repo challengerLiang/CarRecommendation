@@ -100,7 +100,7 @@ def getBM25Score(query, doc, numberOfDoc, avgLenOfDoc):
         #     res += idf * tf * qtf
 
         for word2 in wordsOfQuery:
-            if word1 == word2 or (word1Index == 0 and (not word2.isdigit()) and word1.find(word2) >= 0):
+            if word1 == word2 or (len(word2) >= 3 and word1Index == 0 and (not word2.isdigit()) and word1.find(word2) >= 0):
                 docCount = dictOfDocCount[word1]
                 #docCount = getDocCount(docList, term)
                 queryTermWeight = 1
@@ -166,7 +166,7 @@ def rankDoc(query, docList, rankResNum, listOfRawText):
         scoreDict[index] = score
 
     sortedDict = sorted(scoreDict.items(), key = operator.itemgetter(1), reverse=True)
-    print (sortedDict)
+    # print (sortedDict)
     for i in range(rankResNum):
         index = sortedDict[i][0]
         resDocList.append(listOfRawText[index])
