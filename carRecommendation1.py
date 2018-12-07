@@ -189,7 +189,7 @@ buildDocCountDict(docList)
 
 rankResNum = 30
 resDocList = rankDoc('chev    1990', docList, rankResNum, listOfRawText)
-[print(item) for item in resDocList]
+#[print(item) for item in resDocList]
 
 getMakeTypeNum(listOfRawText)
 
@@ -198,7 +198,7 @@ getMakeTypeNum(listOfRawText)
 queryList = [None]*20
 queryList[0] = 'ford crown'
 queryList[1] = 'crwon ford 2016'
-queryList[2] = 'bMw 2013'
+queryList[2] = 'bMw 3 2013'
 queryList[3] = 'chevrolet'
 queryList[4] = '1000000 dollar'
 queryList[5] = 'hybrid'
@@ -217,7 +217,9 @@ queryList[17] = 'ford crown 2015'
 queryList[18] = 'ford crown 2015'
 queryList[18] = 'ford crown 2015'
 
-#for query in queryList:
+
+resDocList = rankDoc(queryList[1], docList, rankResNum, listOfRawText)
+[print(item) for item in resDocList]
 
 
 
