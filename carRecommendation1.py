@@ -26,13 +26,13 @@ def getFeaturesDictFromRawText(listOfRawText):
         sentence = ""
         for j in range(len(listOfRawText[i])):
             if j == 2:
-                sentence += 'year of ' + listOfRawText[i][j] + ' '
+                sentence += 'year' + listOfRawText[i][j] + ' '
             elif j == 4:
                 sentence += 'Engine HP ' + listOfRawText[i][j] + ' '
             elif j == 5:
                 sentence += 'Engine Cylinders ' + listOfRawText[i][j] + ' '
             elif j == 8:
-                sentence += 'Number of Doors ' + listOfRawText[i][j] + ' '
+                sentence += 'Doors Number ' + listOfRawText[i][j] + ' '
             elif j == 12:
                 sentence += 'highway MPG ' + listOfRawText[i][j] + ' '
             elif j == 13:
@@ -216,9 +216,10 @@ queryList[16] = 'ford crown 2015'
 queryList[17] = 'ford crown 2015'
 queryList[18] = 'ford crown 2015'
 queryList[18] = 'ford crown 2015'
+queryList[19] = 'I want to buy a BMW with a price of 50000'
 
 
-resDocList = rankDoc(queryList[14], docList, rankResNum, listOfRawText)
+resDocList = rankDoc(queryList[19], docList, rankResNum, listOfRawText)
 [print(item) for item in resDocList]
 
 
