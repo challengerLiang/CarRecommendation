@@ -82,20 +82,38 @@ def getBM25Score(query, doc, numberOfDoc, avgLenOfDoc):
     queryLen = len(query)
     word1Index = 0
     for word1 in wordsOfDoc:
-        if word1 in wordsOfQuery:
-            # idf = math.log((sd.num_docs - sd.doc_count + 0.5) / (sd.doc_count + 0.5))
-            # tf = (k1 + 1) * sd.doc_term_count / (k1 * (1 - b + b * sd.doc_size / sd.avg_dl) + sd.doc_term_count)
-            # qtf = (k3 + 1) * sd.query_term_weight / (k3 + sd.query_term_weight)
-            # res = idf * tf * qtf
+        # if word1 in wordsOfQuery or ('-' in word1 and
+        #                                  (word1.split('-')[0] in wordsOfQuery or word1.split('-')[1] in wordsOfQuery)):
+        #
+        #     docCount = dictOfDocCount[word1]
+        #     #docCount = getDocCount(docList, term)
+        #     queryTermWeight = 1
+        #     if word1 in wordsOfQuery:
+        #         queryTermWeight = (queryLen - wordsOfQuery.index(word1)) * 3
+        #     else:
+        #         queryTermWeight = queryLen
+        #
+        #     idf = math.log((numberOfDoc - docCount + 0.5) / (docCount + 0.5))
+        #     tf = (k1 + 1) * 1 / (k1 * (1 - b + b * len(wordsOfDoc) / avgLenOfDoc) + 1)
+        #     qtf = (k3 + 1) * queryTermWeight / (k3 + queryTermWeight)
+        #     res += idf * tf * qtf
 
-            docCount = dictOfDocCount[word1]
-            #docCount = getDocCount(docList, term)
-            queryTermWeight = queryLen - wordsOfQuery.index(word1) * 5
+        for word2 in wordsOfQuery:
+            if word1 == word2 or (word1Index == 0 and (not word2.isdigit()) and word1.find(word2) >= 0):
+                docCount = dictOfDocCount[word1]
+                #docCount = getDocCount(docList, term)
+                queryTermWeight = 1
+                if word2 in wordsOfQuery:
+                    queryTermWeight = (queryLen - wordsOfQuery.index(word2)) * 3
+                else:
+                    queryTermWeight = queryLen
 
-            idf = math.log((numberOfDoc - docCount + 0.5) / (docCount + 0.5))
-            tf = (k1 + 1) * 1 / (k1 * (1 - b + b * len(wordsOfDoc) / avgLenOfDoc) + 1)
-            qtf = (k3 + 1) * queryTermWeight / (k3 + queryTermWeight)
-            res += idf * tf * qtf
+                idf = math.log((numberOfDoc - docCount + 0.5) / (docCount + 0.5))
+                tf = (k1 + 1) * 1 / (k1 * (1 - b + b * len(wordsOfDoc) / avgLenOfDoc) + 1)
+                qtf = (k3 + 1) * queryTermWeight / (k3 + queryTermWeight)
+                res += idf * tf * qtf
+
+
 
         if word1.isdigit():
             num = int(word1)
@@ -147,7 +165,7 @@ def rankDoc(query, docList, rankResNum, listOfRawText):
         scoreDict[index] = score
 
     sortedDict = sorted(scoreDict.items(), key = operator.itemgetter(1), reverse=True)
-    #print (sortedDict)
+    print (sortedDict)
     for i in range(rankResNum):
         index = sortedDict[i][0]
         resDocList.append(listOfRawText[index])
@@ -170,12 +188,41 @@ docList = getFeaturesDictFromRawText(listOfRawText)
 buildDocCountDict(docList)
 
 rankResNum = 30
-resDocList = rankDoc('ford crown', docList, rankResNum, listOfRawText)
-[print(item) for item in resDocList]
+resDocList = rankDoc('chev    1990', docList, rankResNum, listOfRawText)
+#[print(item) for item in resDocList]
 
 getMakeTypeNum(listOfRawText)
 
 
+#Evaluation part
+queryList = [None]*20
+queryList[0] = 'ford crown'
+queryList[1] = 'crwon ford 2016'
+queryList[2] = 'bMw 3 2013'
+queryList[3] = 'chevrolet'
+queryList[4] = '1000000 dollar'
+queryList[5] = 'hybrid'
+queryList[6] = 'audi 100'
+queryList[7] = 'audi 100 50000 dollar'
+queryList[8] = 'I want to buy an audi car'
+queryList[9] = 'mazda 4 engine cylinder'
+queryList[10] = 'mercedes-benz'
+queryList[11] = 'benz'
+queryList[12] = 'for crown 2015'
+queryList[13] = 'chev    1990'
+queryList[14] = 'ford crown 2015'
+queryList[15] = 'ford crown 2015'
+queryList[16] = 'ford crown 2015'
+queryList[17] = 'ford crown 2015'
+queryList[18] = 'ford crown 2015'
+queryList[18] = 'ford crown 2015'
+
+
+resDocList = rankDoc(queryList[1], docList, rankResNum, listOfRawText)
+[print(item) for item in resDocList]
+
+
 
 #Part 2:
+
 
