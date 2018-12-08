@@ -116,24 +116,24 @@ def feature_revise(raw_train_dev, raw_test):
         price = int(items[-1])
         if price < 10000:
             gold = 0
-        elif price >= 10000 and price < 20000:
+        elif price >= 10000 and price < 30000:
             gold = 1
-        elif price >= 20000 and price < 30000:
+        elif price >= 30000 and price < 50000:
             gold = 2
-        elif price >= 30000 and price < 40000:
+        elif price >= 50000 and price < 70000:
             gold = 3
-        elif price >= 40000 and price < 50000:
-            gold = 4
-        elif price >= 50000 and price < 60000:
-            gold = 5
-        elif price >= 60000 and price < 70000:
-            gold = 6
-        elif price >= 70000 and price < 100000:
-            gold = 7
-        elif price >= 100000 and price < 200000:
-            gold = 8
+        # elif price >= 40000 and price < 50000:
+        #     gold = 4
+        # elif price >= 50000 and price < 60000:
+        #     gold = 5
+        # elif price >= 60000 and price < 70000:
+        #     gold = 6
+        # elif price >= 70000 and price < 100000:
+        #     gold = 7
+        # elif price >= 100000 and price < 200000:
+        #     gold = 8
         else:
-            gold = 9
+            gold = 4
 
         revise_train_dev.append([make.index(items[0]), model.index(items[1]), vec_2, vec_3,
                                  transmission.index(items[4]), drive.index(items[5]), vec_6, vec_7, gold])
@@ -266,7 +266,7 @@ print(accuracy)
 
 
 
-# simply tf-idf-vectorizer:
+# tf-idf-vectorizer:
 
 # data = read_csv("data.csv")
 # Y = []
