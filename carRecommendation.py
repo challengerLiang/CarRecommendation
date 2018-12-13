@@ -5,6 +5,8 @@ import math
 import numpy as np
 from flask import Flask, render_template, request, url_for
 
+price_history = []
+
 # need to call at the beginning of the project
 def readCsvFile(file):
     listOfRawText = []
@@ -201,11 +203,14 @@ def result():
       dictOfDocCount = buildDocCountDict(docList)
       rankResNum = 30
       resDocList = rankDoc(str(result['query']), docList, rankResNum, listOfRawText, dictOfDocCount)
+      price_history.append(resDocList[0][15])
       return render_template("result.html", result=resDocList)
 
 @app.route('/back')
 def backtohome():
-    return render_template('index.html')
+    if len(price_history) >= 1:
+        print(price_history)
+    return render_template('index.html', price=price_history)
 
 if __name__ == '__main__':
-   app.run(debug = True)
+   app.run(debug=True)

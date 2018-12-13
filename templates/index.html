@@ -92,6 +92,11 @@
     <div class="container-2">
         <h1>Automobile Search Engine</h1>
     </div>
+    <div class="container-2">
+        {% if price|length >= 1 %}
+            <h2>The price list: {{ price }}</h2>
+        {% endif %}
+    </div>
 </div>
 
 <div class="box">
