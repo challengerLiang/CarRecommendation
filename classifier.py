@@ -317,6 +317,12 @@ for i in range(len(test)):
 
 [print(item) for item in new_data]
 
+with open('recommendation.csv', mode='w') as rec_csv:
+    writer = csv.writer(rec_csv, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+    writer.writerow(['Year-Make-Model', 'Price'])
+    for i in range(len(test)):
+        writer.writerow([str(test[i][12]), str(predicted_price[i])])
+
 # X2 = vectorizer.fit(corpus)
 # X1 = X2.transform(corpus)
 # X = X1.toarray()
