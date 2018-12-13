@@ -6,6 +6,8 @@ import numpy as np
 from flask import Flask, render_template, request, url_for
 
 price_history = []
+make_history = []
+
 
 # need to call at the beginning of the project
 def readCsvFile(file):
@@ -48,6 +50,7 @@ def getFeaturesDictFromRawText(listOfRawText):
     #[print(item) for item in wholeText]
     return wholeText
 
+
 def buildDocCountDict(docList):
     dictOfDocCount = {}
     for doc in docList:
@@ -71,6 +74,7 @@ def buildDocCountDict(docList):
 #             else:
 #                 score += 10000
 #     return score
+
 
 def getBM25Score(query, doc, numberOfDoc, avgLenOfDoc, dictOfDocCount):
     wordsOfQuery = query.lower().replace('fancy', 'exotic,luxury')
@@ -140,6 +144,7 @@ def getBM25Score(query, doc, numberOfDoc, avgLenOfDoc, dictOfDocCount):
     #print(res)
     return res
 
+
 def getNumberOfDocs(docList):
     return len(docList)
 
@@ -150,6 +155,7 @@ def getNumberOfDocs(docList):
 #         if term.lower() in wordsOfDoc:
 #             count += 1
 #     return count
+
 
 def getAvgLenOfDoc(docList):
     counter = 0
@@ -177,6 +183,7 @@ def rankDoc(query, docList, rankResNum, listOfRawText, dictOfDocCount):
         resDocList.append(listOfRawText[index])
     return(resDocList)
 
+
 def getMakeTypeNum(listOfRawText):
     tempDict = {}
     for i in range(1, len(listOfRawText)):
@@ -186,6 +193,30 @@ def getMakeTypeNum(listOfRawText):
     #     print(key)
     # print (len(tempDict))
     return len(tempDict)
+
+
+def recommendation_system(price_list, make_list):
+    dist_recommendation = {}
+    total_price = 0
+    num_price = len(price_list)
+    for price in price_list:
+        total_price += int(price)
+    mean_price = float(total_price) / num_price
+    list_raw_predictons = readCsvFile(sys.argv[2])
+    for item in list_raw_predictons:
+        entry = item[0] + " $" + item[1]
+        if entry not in dist_recommendation:
+            dist_recommendation[entry] = np.absolute(int(item[1]) - mean_price)
+    sorted_rec = [(k, dist_recommendation[k]) for k in sorted(dist_recommendation, key=dist_recommendation.get, reverse=False)]
+    recommend_list = []
+    for k, v in sorted_rec:
+        for make in make_list:
+            if make in str(k).split(" "):
+                recommend_list.append(k)
+                break
+        if len(recommend_list) >= 5:
+            break
+    return recommend_list
 
 app = Flask(__name__)
 
@@ -204,13 +235,15 @@ def result():
       rankResNum = 30
       resDocList = rankDoc(str(result['query']), docList, rankResNum, listOfRawText, dictOfDocCount)
       price_history.append(resDocList[0][15])
+      make_history.append(resDocList[0][0])
       return render_template("result.html", result=resDocList)
 
 @app.route('/back')
 def backtohome():
+    recommendations = []
     if len(price_history) >= 1:
-        print(price_history)
-    return render_template('index.html', price=price_history)
+        recommendations = recommendation_system(price_history, make_history)
+    return render_template('index.html', rec=recommendations)
 
 if __name__ == '__main__':
    app.run(debug=True)
