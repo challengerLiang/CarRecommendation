@@ -212,7 +212,7 @@ def recommendation_system(price_list, make_list):
     for k, v in sorted_rec:
         for make in make_list:
             if make in str(k).split(" "):
-                recommend_list.append(k)
+                recommend_list.append(str(k).split(" "))
                 break
         if len(recommend_list) >= 5:
             break
