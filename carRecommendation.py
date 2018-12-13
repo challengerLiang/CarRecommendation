@@ -3,6 +3,7 @@ import csv
 import operator
 import math
 import numpy as np
+import string
 from flask import Flask, render_template, request, url_for
 
 price_history = []
@@ -82,6 +83,8 @@ def getBM25Score(query, doc, numberOfDoc, avgLenOfDoc, dictOfDocCount):
     wordsOfQuery = wordsOfQuery.replace('fastest', 'exotic,performance')
     wordsOfQuery = wordsOfQuery.replace('car', 'cars')
     wordsOfQuery = wordsOfQuery.split()
+    # remove stopwords
+    wordsOfQuery = [word for word in wordsOfQuery if not word in string.punctuation]
     wordsOfDoc = doc.lower().split()
     res = 0
 

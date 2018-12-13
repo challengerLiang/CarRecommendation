@@ -3,6 +3,7 @@ import csv
 import operator
 import math
 import numpy as np
+import string
 
 #Part 1:
 dictOfDocCount = {}
@@ -74,6 +75,8 @@ def getBM25Score(query, doc, numberOfDoc, avgLenOfDoc):
     wordsOfQuery = query.lower().replace('fancy','exotic,luxury')
     wordsOfQuery = wordsOfQuery.replace('fastest', 'exotic,performance')
     wordsOfQuery = wordsOfQuery.split()
+    #remove stopwords
+    wordsOfQuery = [word for word in wordsOfQuery if not word in string.punctuation]
     wordsOfDoc = doc.lower().split()
     res = 0
 
